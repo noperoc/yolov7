@@ -1,0 +1,31 @@
+lr0: 0.003  # initial learning rate (SGD=1E-2, Adam=1E-3)  0.01
+lrf: 0.01  # final OneCycleLR learning rate (lr0 * lrf)     0.1
+momentum: 0.937  # SGD momentum/Adam beta1
+weight_decay: 0.0005  # optimizer weight decay 5e-4
+warmup_epochs: 6.0  # warmup epochs (fractions ok)     3.0
+warmup_momentum: 0.8  # warmup initial momentum
+warmup_bias_lr: 0.1  # warmup initial bias lr
+box: 0.03  # box loss gain     回归损失权重 0.05
+cls: 0.75  # cls loss gain      分类损失权重 0.3 0.6
+cls_pw: 1.0  # cls BCELoss positive_weight
+obj: 0.7  # obj loss gain (scale with pixels)  目标损失权重0.7
+obj_pw: 0.8  # obj BCELoss positive_weight   前景权重1.0
+iou_t: 0.20  # IoU training threshold
+anchor_t: 4.0  # anchor-multiple threshold
+# anchors: 3  # anchors per output layer (0 to ignore)
+fl_gamma: 0.0  # focal loss gamma (efficientDet default gamma=1.5)  默认0.0
+hsv_h: 0.012  # image HSV-Hue augmentation (fraction)        色调0.015
+hsv_s: 0.6  # image HSV-Saturation augmentation (fraction)   饱和度0.7
+hsv_v: 0.3  # image HSV-Value augmentation (fraction)        亮度0.4
+degrees: 0.0  # image rotation (+/- deg)
+translate: 0.2  # image translation (+/- fraction)
+scale: 0.5  # image scale (+/- gain)
+shear: 0.0  # image shear (+/- deg)
+perspective: 0.0  # image perspective (+/- fraction), range 0-0.001
+flipud: 0.0  # image flip up-down (probability)
+fliplr: 0.5  # image flip left-right (probability)
+mosaic: 1.0  # image mosaic (probability)
+mixup: 0.0  # image mixup (probability)
+copy_paste: 0.15 # image copy paste (probability)  0.0  0.1
+paste_in: 0.0  # image copy paste (probability), use 0 for faster training
+loss_ota: 1 # use ComputeLossOTA, use 0 for faster training

@@ -1,0 +1,20 @@
+
+train: ./datasets/helmet/train.txt
+val: ./datasets/helmet/val.txt
+test: ./datasets/helmet/val.txt
+
+# number of classes
+# nc: 6
+nc: 2
+
+# class names
+# 0 hand_smoke 手持香烟吸烟
+# 1 head 头部（未吸烟）
+# 2 head_smoke 头部（抽烟）
+# 3 hand 手部（未抽烟）
+# 4 call 手持手机打电话
+# 5 headandhand_smoke 手持香烟在嘴部抽烟
+# names: ['hand_smoke', 'head', 'head_smoke', 'hand', 'call', 'headandhand_smoke']
+names: ['helmet', 'head']
+
+

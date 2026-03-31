@@ -1,0 +1,13 @@
+
+train: ./datasets/person-detection/train.txt
+# val: ./datasets/person-detection/val.txt
+# test: ./datasets/person-detection/val.txt
+# val: ./datasets/person-detection/val-3000.txt
+# test: ./datasets/person-detection/val-3000.txt
+val: ./datasets/person-detection/val-1121.txt
+test: ./datasets/person-detection/val-1121.txt
+
+# number of classes
+nc: 1
+
+names: ['person']
