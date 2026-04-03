@@ -559,17 +559,24 @@ class ComputeLossOTA:
         super(ComputeLossOTA, self).__init__()
         device = next(model.parameters()).device  # get model device
         h = model.hyp  # hyperparameters
+        det = model.module.model[-1] if is_parallel(model) else model.model[-1]  # Detect() module
 
-
-        ##############################################################
-        # cls_weight = torch.tensor([2.0, 1.0, 2.0, 1.0, 1.0, 2.0], device=device)
-        # BCEcls = nn.BCEWithLogitsLoss(pos_weight=cls_weight)
-        # cls_weight = torch.tensor([1.0, 0.3], device=device)
-        # cls_weight = torch.tensor([1.1, 0.55, 1.1], device=device)
-
-        # cls_weight = torch.tensor([1.5, 0.375, 1.5], device=device)
-        cls_weight = torch.tensor([2.8, 0.7, 2.8], device=device)
-        BCEcls = nn.BCEWithLogitsLoss(weight=cls_weight, pos_weight=torch.tensor([h['cls_pw']], device=device))
+        # Optional per-class weights for small custom datasets.
+        # Fall back to the stock YOLOv7 loss when the class count does not match.
+        cls_weight_map = {
+            2: [1.0, 0.3],
+            3: [2.8, 0.7, 2.8],
+            6: [2.0, 1.0, 2.0, 1.0, 1.0, 2.0],
+        }
+        cls_weight = cls_weight_map.get(det.nc)
+        if cls_weight is not None:
+            cls_weight = torch.tensor(cls_weight, device=device)
+            BCEcls = nn.BCEWithLogitsLoss(
+                weight=cls_weight,
+                pos_weight=torch.tensor([h['cls_pw']], device=device)
+            )
+        else:
+            BCEcls = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([h['cls_pw']], device=device))
 
         # Define criteria
         BCEobj = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([h['obj_pw']], device=device))
